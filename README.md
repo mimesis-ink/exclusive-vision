@@ -43,28 +43,34 @@ exclusive-vision/
 
 ## 🚀 快速开始
 
-### 1. 阅读核心文档
+### 新手必读：[快速开始指南](docs/QUICK_START.md) ⭐
 
-首先阅读以下文档了解项目：
+5分钟快速上手，立即开始创作！
+
+### 核心文档
 
 - [PROJECT_OVERVIEW.md](docs/PROJECT_OVERVIEW.md) - 了解项目整体规划
 - [WRITING_GUIDELINES.md](docs/WRITING_GUIDELINES.md) - 掌握写作规范
 - [CHAPTER_STRUCTURE.md](docs/CHAPTER_STRUCTURE.md) - 学习章节结构
 - [OUTLINE.md](docs/OUTLINE.md) - 查看故事大纲
 - [CHARACTERS.md](docs/CHARACTERS.md) - 了解人物设定
+- [FAQ_AND_TIPS.md](docs/FAQ_AND_TIPS.md) - 常见问题与写作技巧
 
-### 2. 使用模板创作
+### 模板和工具
 
-使用 `templates/chapter_template.md` 作为基础模板开始创作：
+**创作模板**：
+- [chapter_template.md](templates/chapter_template.md) - 章节创作模板
+- [chapter_checklist.md](templates/chapter_checklist.md) - 章节检查清单
+- [system_ui_examples.md](templates/system_ui_examples.md) - 系统UI示例库
 
+**创建新章节**：
 ```bash
 # 复制模板创建新章节
-cp templates/chapter_template.md chapters/chapter_001.md
+cp templates/chapter_template.md chapters/chapter_XXX.md
 ```
 
-### 3. 参考系统UI示例
-
-查看 `templates/system_ui_examples.md` 获取系统弹窗的各种写法示例。
+**查看示例**：
+- [chapter_001.md](chapters/chapter_001.md) - 第一章示例（已完成）
 
 ## ✍️ 写作原则
 
