@@ -1,0 +1,45 @@
+# .gitignore
+
+# 临时文件
+*.tmp
+*.temp
+~*
+.DS_Store
+
+# 编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 草稿和笔记
+drafts/
+notes/
+scratch/
+
+# 备份文件
+*.bak
+*.backup
+backup/
+
+# 本地配置
+local_config.json
+.env
+.env.local
+
+# 日志文件
+*.log
+logs/
+
+# 章节草稿（如果需要单独管理）
+# chapters/drafts/
+
+# 输出文件
+output/
+build/
+dist/
+
+# 系统文件
+Thumbs.db
+.Trashes

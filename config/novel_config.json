@@ -1,0 +1,94 @@
+{
+  "novel": {
+    "title": "独家视界：谎言必须死",
+    "title_en": "Exclusive Vision: Lies Must Die",
+    "author": "",
+    "genre": "都市职场",
+    "tags": ["公关", "鉴谎系统", "商业", "爽文", "短剧改编"],
+    "status": "写作中",
+    "created_date": "2026-01-27"
+  },
+  "planning": {
+    "total_words": {
+      "min": 200000,
+      "max": 250000,
+      "target": 220000
+    },
+    "total_chapters": {
+      "min": 100,
+      "max": 120,
+      "target": 110
+    },
+    "words_per_chapter": {
+      "min": 1800,
+      "max": 2000,
+      "strict": true
+    }
+  },
+  "structure": {
+    "volumes": [
+      {
+        "volume": 1,
+        "title": "觉醒",
+        "chapters": {
+          "start": 1,
+          "end": 40
+        },
+        "theme": "系统觉醒、发现真相、初步对抗"
+      },
+      {
+        "volume": 2,
+        "title": "博弈",
+        "chapters": {
+          "start": 41,
+          "end": 80
+        },
+        "theme": "深入调查、商业战争、关系裂痕"
+      },
+      {
+        "volume": 3,
+        "title": "终局",
+        "chapters": {
+          "start": 81,
+          "end": 120
+        },
+        "theme": "真相大白、最终对决、故事完结"
+      }
+    ]
+  },
+  "requirements": {
+    "chapter_structure": {
+      "opening": "开头有冲突",
+      "middle": "中间有反转",
+      "ending": "结尾有钩子"
+    },
+    "system_ui": {
+      "min_per_chapter": 3,
+      "max_per_chapter": 5,
+      "importance": "核心卖点"
+    },
+    "writing_style": {
+      "forbidden": [
+        "大段环境描写",
+        "抒情式心理描写",
+        "冗长过渡段落"
+      ],
+      "recommended": [
+        "直接写动作",
+        "对话推动情节",
+        "系统UI弹窗描写",
+        "短句快节奏"
+      ]
+    }
+  },
+  "core_concept": {
+    "protagonist": "公关女王 + 鉴谎系统（视网膜弹窗）",
+    "antagonist": "伪君子丈夫 + 资本阴谋",
+    "system_feature": "视网膜弹窗显示鉴谎信息"
+  },
+  "adaptation": {
+    "target_platform": ["网文平台", "短剧"],
+    "target_audience": "都市职场爽文爱好者",
+    "selling_point": "鉴谎系统视觉特效"
+  }
+}
