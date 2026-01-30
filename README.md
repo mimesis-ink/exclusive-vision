@@ -121,6 +121,25 @@ cp templates/chapter_template.md chapters/chapter_XXX.md
 - [ ] 无注水内容
 - [ ] 适合拍摄
 
+## 🔧 工具 / Tools
+
+### 番茄小说网流量分析工具
+
+分析小说在番茄小说网的流量潜力和平台适配度：
+
+```bash
+cd tools
+python3 analyze_traffic.py
+```
+
+**功能**：
+- 检查发布状态
+- 评估平台适配度（0-100分）
+- 分析流量潜力
+- 提供发布建议
+
+详细说明请查看 [tools/README.md](tools/README.md)
+
 ## 📄 许可证
 
 Copyright © 2026
