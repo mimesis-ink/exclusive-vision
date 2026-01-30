@@ -90,5 +90,20 @@
     "target_platform": ["网文平台", "短剧"],
     "target_audience": "都市职场爽文爱好者",
     "selling_point": "鉴谎系统视觉特效"
+  },
+  "platforms": {
+    "fanqie": {
+      "name": "番茄小说网",
+      "name_en": "Fanqie Novel",
+      "status": "待发布",
+      "has_traffic": false,
+      "notes": "番茄小说网（字节跳动旗下）适合短剧改编类型的都市职场小说",
+      "traffic_data": {
+        "last_checked": null,
+        "views": 0,
+        "comments": 0,
+        "favorites": 0
+      }
+    }
   }
 }
