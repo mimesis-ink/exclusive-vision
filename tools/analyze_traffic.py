@@ -21,16 +21,21 @@ class FanqieTrafficAnalyzer:
         self.config_path = config_path
         self.config = self._load_config()
         self.novel_title = self.config.get("novel", {}).get("title", "")
-        self.platforms = {}
         
     def _load_config(self):
         """加载配置文件"""
         try:
-            config_file = os.path.join(os.path.dirname(__file__), self.config_path)
+            # Use absolute path based on file location for robustness
+            script_dir = os.path.dirname(os.path.abspath(__file__))
+            config_file = os.path.join(script_dir, self.config_path)
             with open(config_file, 'r', encoding='utf-8') as f:
                 return json.load(f)
         except FileNotFoundError:
-            print(f"配置文件未找到: {self.config_path}")
+            print(f"错误: 配置文件未找到: {self.config_path}")
+            print("请确保从项目根目录或 tools 目录运行此脚本")
+            return {}
+        except Exception as e:
+            print(f"错误: 读取配置文件失败: {e}")
             return {}
     
     def check_fanqie_presence(self):
@@ -86,14 +91,21 @@ class FanqieTrafficAnalyzer:
             words_per_chapter = planning.get("words_per_chapter", {}).get("min", 1800)
             total_words = chapter_count * words_per_chapter
         
+        # Safely calculate completion rate with zero division protection
+        target_chapters = planning.get("total_chapters", {}).get("target", 110)
+        if target_chapters and target_chapters > 0:
+            completion_rate = f"{(chapter_count / target_chapters * 100):.1f}%"
+        else:
+            completion_rate = "N/A"
+        
         analysis = {
             "novel_title": novel_info.get("title", ""),
             "genre": novel_info.get("genre", ""),
             "tags": novel_info.get("tags", []),
             "completed_chapters": chapter_count,
             "estimated_words": total_words,
-            "target_chapters": planning.get("total_chapters", {}).get("target", 110),
-            "completion_rate": f"{(chapter_count / planning.get('total_chapters', {}).get('target', 110) * 100):.1f}%",
+            "target_chapters": target_chapters,
+            "completion_rate": completion_rate,
             "platform_suitability": self._evaluate_platform_suitability(novel_info),
             "traffic_potential": self._estimate_traffic_potential(chapter_count, novel_info)
         }
@@ -104,6 +116,11 @@ class FanqieTrafficAnalyzer:
         """
         评估小说对番茄小说网的适配度
         Evaluate the novel's suitability for Fanqie Novel website
+        
+        Scoring system (max 100 points):
+        - Genre match: 30 points
+        - Tag match: 15 points per tag (max 4 tags = 60 points)
+        - Short drama adaptation: 25 points (only if not already counted in tags)
         """
         tags = novel_info.get("tags", [])
         genre = novel_info.get("genre", "")
@@ -115,21 +132,32 @@ class FanqieTrafficAnalyzer:
         suitability_score = 0
         reasons = []
         
-        # 检查类型匹配
+        # 检查类型匹配 (30 points)
         if genre in preferred_genres:
             suitability_score += 30
             reasons.append(f"类型匹配: {genre}")
         
-        # 检查标签匹配
+        # 检查标签匹配 (15 points per tag, max 4 tags)
         matching_tags = [tag for tag in tags if any(pt in tag for pt in preferred_tags)]
         if matching_tags:
-            suitability_score += len(matching_tags) * 15
+            # Limit to 4 matching tags to prevent score overflow
+            tag_score = min(len(matching_tags), 4) * 15
+            suitability_score += tag_score
             reasons.append(f"标签匹配: {', '.join(matching_tags)}")
         
-        # 短剧改编特性
-        if "短剧改编" in tags or "短剧" in tags:
+        # 短剧改编特性 (25 points, only if not already counted in matching tags)
+        has_short_drama = "短剧改编" in tags or "短剧" in tags
+        short_drama_already_counted = any("短剧" in tag for tag in matching_tags)
+        
+        if has_short_drama and not short_drama_already_counted:
             suitability_score += 25
             reasons.append("具有短剧改编潜力（番茄平台优势）")
+        elif has_short_drama and short_drama_already_counted:
+            # Add reason but don't double-count score
+            reasons.append("具有短剧改编潜力（番茄平台优势）")
+        
+        # Cap at 100 to ensure score is in valid range
+        suitability_score = min(suitability_score, 100)
         
         suitability_level = "低"
         if suitability_score >= 70:
@@ -166,12 +194,16 @@ class FanqieTrafficAnalyzer:
             if chapter_count >= 50:
                 potential["recommendation"].append("已有大量章节储备，可以采用爆更策略吸引读者")
         
-        # 检查类型适配性
+        # Add platform-specific recommendations based on novel features
+        # Note: These checks are separate from suitability scoring
         tags = novel_info.get("tags", [])
-        if "短剧改编" in tags:
+        
+        # Check for short drama adaptation feature
+        if any("短剧" in tag for tag in tags):
             potential["recommendation"].append("短剧改编特性与番茄平台契合度高，建议重点推广")
         
-        if "系统" in tags or any("系统" in tag for tag in tags):
+        # Check for system genre feature
+        if any("系统" in tag for tag in tags):
             potential["recommendation"].append("系统流小说在番茄平台受欢迎，有流量潜力")
         
         return potential
